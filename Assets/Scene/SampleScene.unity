@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 2
+  jumpForce: 1
   isFacingRight: 0
   isAbleToUseFireball: 0
   isGrounded: 0
@@ -769,6 +769,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   checkRadius: 0.3
+  fireBall: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!61 &1054473730
 BoxCollider2D:
   m_ObjectHideFlags: 0

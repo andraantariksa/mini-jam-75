@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-    public float jumpForce;
+    [Header("Movement")]
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpForce;
     private float moveInput;
-    public bool isFacingRight;
+    [SerializeField] private bool isFacingRight;
 
     public bool isAbleToUseFireball = false;
 
     [Space]
-    public bool isGrounded;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
-    public float checkRadius;
+    [SerializeField] public bool isGrounded;
+    [SerializeField] public Transform groundCheck;
+    [SerializeField] public LayerMask groundLayer;
+    [SerializeField] float checkRadius;
+
+    [Header("Shooting Stuff")]
+    [SerializeField] private GameObject fireBall;
+    [SerializeField] private Transform firePoint;
 
     private Rigidbody2D rb2d;
 
@@ -52,7 +57,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-
 
         Move();
     }
