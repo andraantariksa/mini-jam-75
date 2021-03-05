@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IBook
+public interface IAbility
 {
-    void OnCollisionEnter2D(Collision2D collision);
+    void Cast(PlayerController player);
 }

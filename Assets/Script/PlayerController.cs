@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     public bool isFacingRight;
 
+    public bool isAbleToUseFireball = false;
+
     [Space]
     public bool isGrounded;
     public Transform groundCheck;
@@ -20,15 +22,30 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>(); 
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
         //This line of code will control the jump power or DO the jump!!
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
         {
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        {
+            var ability = GetComponent<IAbility>();
+            if (ability != null)
+            {
+                ability.Cast(this);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.R) && isAbleToUseFireball)
+        {
+            // Spawn fireball
+            Debug.Log("Fireball");
         }
     }
 
