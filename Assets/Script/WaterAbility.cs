@@ -18,8 +18,15 @@ public class WaterAbility : MonoBehaviour, IAbility
         var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
         if (hit.collider != null)
         {
-            Instantiate(prefabWaterSpawner, hit.point, Quaternion.identity);
-            Destroy(this);
+            if (hit.collider.gameObject.tag == "Pedestal")
+            {
+                hit.collider.GetComponent<Pedestal>().Spell(SpellType.Water);
+            }
+            else
+            {
+                Instantiate(prefabWaterSpawner, hit.point, Quaternion.identity);
+                Destroy(this);
+            }
         }
     }
 

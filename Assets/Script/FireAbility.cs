@@ -15,7 +15,15 @@ public class FireAbility : MonoBehaviour, IAbility
 
     public void Cast(PlayerController player)
     {
-        Instantiate(prefabFireball, player.firePoint.position, player.transform.rotation);
+        var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+        if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
+        {
+            hit.collider.GetComponent<Pedestal>().Spell(SpellType.Fire);
+        }
+        else
+        {
+            Instantiate(prefabFireball, player.firePoint.position, player.transform.rotation);
+        }
     }
 
     public void Drop(PlayerController player)
