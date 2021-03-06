@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2158847225829402221}
   - component: {fileID: 1159238579499645081}
   - component: {fileID: -7489776206973091213}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37c176a308128f49b7d9ae71b2d7045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 30
 --- !u!50 &1159238579499645081
 Rigidbody2D:
   serializedVersion: 4

@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] private GameObject fireBall;
     [SerializeField] private float fireRateForFireBall;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] public Transform firePoint;
+    public IAbility currentAbility = null;
  
 
     public bool hasWoodBook { get; protected set; }
@@ -51,8 +52,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        WoodAbility();
-        FireAbility();
+        // WoodAbility();
+        // FireAbility();
 
         //This line of code will control the jump power or DO the jump!!
         if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
@@ -60,31 +61,28 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKey(KeyCode.Backspace))
-        {
-            DropBook();
-        }
+        // if (Input.GetKey(KeyCode.Backspace))
+        // {
+        //     DropBook();
+        // }
             
 
-       /* if (Input.GetKey(KeyCode.Space))
+       if (Input.GetKey(KeyCode.Space))
         {
-            var ability = GetComponent<IAbility>();
-            if (ability != null)
+            if (currentAbility != null)
             {
                 Debug.Log("Cast");
-                ability.Cast(this);
+                currentAbility.Cast(this);
             }
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            var ability = GetComponent<IAbility>();
-            if (ability != null)
+            if (currentAbility != null)
             {
-                ability.Drop(this);
+                currentAbility.Drop(this);
             }
         }
-       */
     }
 
     void FixedUpdate()
@@ -117,17 +115,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.GetComponent<Books>().bookName == "WoodBook" && !hasFireBook)
-        {
-            hasWoodBook = true;
-        }
-        else if(collision.gameObject.GetComponent<Books>().bookName == "FireBook" && !hasWoodBook)
-        {
-            hasFireBook = true;
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if(collision.gameObject.GetComponent<Books>().bookName == "WoodBook" && !hasFireBook)
+    //     {
+    //         hasWoodBook = true;
+    //     }
+    //     else if(collision.gameObject.GetComponent<Books>().bookName == "FireBook" && !hasWoodBook)
+    //     {
+    //         hasFireBook = true;
+    //     }
+    // }
 
     public void WoodAbility()
     {
