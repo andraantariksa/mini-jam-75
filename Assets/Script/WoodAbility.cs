@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WoodAbility : MonoBehaviour, IAbility
 {
-    public GameObject prefab;
+    public GameObject prefabStump;
+    public WoodBook prefabWoodBook;
 
     public void Start()
     {
-        prefab = (GameObject)Resources.Load("Prefab/Stump");
+        prefabStump = (GameObject)Resources.Load("Prefab/Stump");
+        prefabWoodBook = Resources.Load<WoodBook>("Prefab/WoodBook");
     }
 
     public void Cast(PlayerController player)
@@ -16,8 +18,15 @@ public class WoodAbility : MonoBehaviour, IAbility
         var hit = Physics2D.Raycast(player.transform.position, Vector2.down);
         if (hit.collider != null)
         {
-            Instantiate(prefab, hit.point, Quaternion.identity);
+            Instantiate(prefabStump, hit.point, Quaternion.identity);
             Destroy(this);
         }
+    }
+
+    public void Drop(PlayerController player)
+    {
+        var woodBook = Instantiate(prefabWoodBook, player.transform.position, player.transform.rotation);
+        woodBook.DisableCollision();
+        Destroy(this);
     }
 }

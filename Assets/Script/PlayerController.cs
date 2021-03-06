@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     [SerializeField] private bool isFacingRight;
 
-    public bool isAbleToUseFireball = false;
-
     [Space]
     [SerializeField] public bool isGrounded;
     [SerializeField] public Transform groundCheck;
@@ -19,8 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float checkRadius;
 
     [Header("Shooting Stuff")]
-    [SerializeField] private GameObject fireBall;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] public Transform firePoint;
 
     private Rigidbody2D rb2d;
 
@@ -38,19 +35,23 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space))
         {
             var ability = GetComponent<IAbility>();
             if (ability != null)
             {
+                Debug.Log("Cast");
                 ability.Cast(this);
             }
         }
 
-        if (Input.GetKey(KeyCode.R) && isAbleToUseFireball)
+        if (Input.GetKey(KeyCode.Q))
         {
-            // Spawn fireball
-            Debug.Log("Fireball");
+            var ability = GetComponent<IAbility>();
+            if (ability != null)
+            {
+                ability.Drop(this);
+            }
         }
     }
 
@@ -64,9 +65,8 @@ public class PlayerController : MonoBehaviour
     public void Flip()
     {
         isFacingRight = !isFacingRight;
-        Vector3 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
+        
+        transform.Rotate(0f, 180f, 0f);
     }
 
     public void Move()

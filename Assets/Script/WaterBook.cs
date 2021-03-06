@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodBook : MonoBehaviour
+public class WaterBook : MonoBehaviour
 {
     Collider2D c2d;
 
@@ -16,8 +16,8 @@ public class WoodBook : MonoBehaviour
         var player = col.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            Debug.Log("Add wood ability");
-            col.gameObject.AddComponent<WoodAbility>();
+            Debug.Log("Add water ability");
+            col.gameObject.AddComponent<WaterAbility>();
             Destroy(gameObject);
         }
     }

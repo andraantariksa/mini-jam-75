@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float speed = 3f;
+    // public GameObject impactEffect;
     
-    void FixedUpdate()
+    void Start()
     {
-        transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+        GetComponent<Rigidbody2D>().velocity = transform.right * speed;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        // Enemy
+        Enemy enemy = collision.GetComponent<Enemy>();
+		if (enemy != null)
+		{
+			enemy.TakeDamage();
+		}
+
+        // Fireball effect
+		// Instantiate(impactEffect, transform.position, transform.rotation);
+
+		Destroy(gameObject);
     }
 }

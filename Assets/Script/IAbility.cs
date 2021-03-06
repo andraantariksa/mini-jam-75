@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IAbility
 {
     void Cast(PlayerController player);
+    void Drop(PlayerController player);
 }
