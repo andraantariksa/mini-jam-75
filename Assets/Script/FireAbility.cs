@@ -22,7 +22,7 @@ public class FireAbility : MonoBehaviour, IAbility
         }
         else
         {
-            Instantiate(prefabFireball, player.firePoint.position, player.transform.rotation);
+            Instantiate(prefabFireball, player.transform.position, player.transform.rotation);
         }
     }
 

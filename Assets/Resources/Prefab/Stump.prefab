@@ -134,6 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3906791418872337197}
+  - component: {fileID: -3136321130239846308}
   m_Layer: 0
   m_Name: Stump
   m_TagString: Untagged
@@ -156,6 +157,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3136321130239846308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906791418872337198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2ea61e101c00c4ca65fd3c29c0b0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabDeletingTime: 5
 --- !u!1 &3906791418970845013
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,50 +8,27 @@ public class LevelManager : MonoBehaviour
     public Image woodBookImage;
     public Image fireBookImage;
 
-    public GameObject fireBook;
-    public GameObject woodBook;
-
-    public Transform playerPos;
-
-    public Vector3 playerToBookOffset;
-
+    PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateBookUI();
-    }
-
-    void UpdateBookUI()
-    {
-        if (GameObject.FindGameObjectWithTag("FireBook") == null)
+        if (player.hasWoodBook)
         {
-            if (GameObject.FindGameObjectWithTag("WoodBook") == null)
-            {
-                Instantiate(woodBook, playerPos.position + playerToBookOffset, woodBook.transform.rotation);
-                woodBookImage.enabled = false;
-            }
-
-            fireBookImage.enabled = true;
-        }
-        else { fireBookImage.enabled = false; }
-
-
-
-        if (GameObject.FindGameObjectWithTag("WoodBook") == null)
-        {
-            if (GameObject.FindGameObjectWithTag("FireBook") == null)
-            {
-                Instantiate(fireBook, playerPos.position + playerToBookOffset, fireBook.transform.rotation);
-                fireBookImage.enabled = false;
-            }
             woodBookImage.enabled = true;
         }
         else { woodBookImage.enabled = false; }
+
+        if (player.hasFireBook)
+        {
+            fireBookImage.enabled = true;
+        }
+        else { fireBookImage.enabled = false; }
     }
+
 }

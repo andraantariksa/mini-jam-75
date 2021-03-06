@@ -5,9 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Metaball_liquid
-  - FireBook
-  - WoodBook
   - Pedestal
+  - Book
   layers:
   - Default
   - TransparentFX
