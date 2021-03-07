@@ -12,6 +12,7 @@ public class FireBook : MonoBehaviour, IBook
         if (player != null && player.currentAbility == null && takeable)
         {
             Debug.Log("Add fire ability");
+            player.animator.SetBool("isHoldingFireBook", true);
             var ability = col.gameObject.AddComponent<FireAbility>();
             player.currentAbility = ability;
             Destroy(gameObject);

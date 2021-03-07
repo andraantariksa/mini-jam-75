@@ -12,6 +12,7 @@ public class WaterBook : MonoBehaviour, IBook
         if (player != null && player.currentAbility == null && takeable)
         {
             Debug.Log("Add water ability");
+            player.animator.SetBool("isHoldingWaterBook", true);
             var ability = col.gameObject.AddComponent<WaterAbility>();
             player.currentAbility = ability;
             Destroy(gameObject);

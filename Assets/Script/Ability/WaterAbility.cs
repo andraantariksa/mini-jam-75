@@ -6,6 +6,9 @@ public class WaterAbility : MonoBehaviour, IAbility
 {
     public GameObject prefabWaterSpawner;
     public WaterBook prefabWaterBook;
+    public float FireDelay  = 3f;
+    float currentFireDelay = 0f;
+    GameObject currentWaterSpawner = null;
 
     public void Start()
     {
@@ -15,26 +18,51 @@ public class WaterAbility : MonoBehaviour, IAbility
 
     public void Cast(PlayerController player)
     {
-        var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-        if (hit.collider != null)
+        if (currentFireDelay <= 0f)
         {
-            if (hit.collider.gameObject.tag == "Pedestal")
+            var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+            if (hit.collider != null)
             {
-                hit.collider.GetComponent<Pedestal>().Spell(SpellType.Water);
+                player.animator.SetTrigger("useWaterAbility");
+                DestroyWaterSpawner();
+                if (hit.collider.gameObject.tag == "Pedestal")
+                {
+                    hit.collider.GetComponent<Pedestal>().Spell(SpellType.Water);
+                }
+                else
+                {
+                    currentWaterSpawner = Instantiate(prefabWaterSpawner, hit.point, Quaternion.identity);
+                }
             }
-            else
-            {
-                Instantiate(prefabWaterSpawner, hit.point, Quaternion.identity);
-                Destroy(this);
-            }
+            currentFireDelay = FireDelay;
         }
     }
 
     public void Drop(PlayerController player)
     {
+        player.animator.SetBool("isHoldingWaterBook", false);
         var waterBook = Instantiate(prefabWaterBook, player.transform.position, player.transform.rotation);
         waterBook.UntakeableFor();
         player.currentAbility = null;
+        DestroyWaterSpawner();
         Destroy(this);
+    }
+
+    void Update()
+    {
+        if (currentFireDelay > 0f)
+        {
+            currentFireDelay -= Time.deltaTime;
+        }
+    }
+
+    void DestroyWaterSpawner()
+    {
+        if (currentWaterSpawner != null)
+        {
+            var waterSpawner = currentWaterSpawner.GetComponent<Water2DSpawner>();
+            waterSpawner.DestroyAll();
+            Destroy(currentWaterSpawner);
+        }
     }
 }

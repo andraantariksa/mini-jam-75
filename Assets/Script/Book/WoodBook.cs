@@ -12,6 +12,7 @@ public class WoodBook : MonoBehaviour, IBook
         if (player != null && player.currentAbility == null && takeable)
         {
             Debug.Log("Add wood ability");
+            player.animator.SetBool("isHoldingWoodBook", true);
             var ability = col.gameObject.AddComponent<WoodAbility>();
             player.currentAbility = ability;
             Destroy(gameObject);

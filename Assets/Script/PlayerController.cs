@@ -63,7 +63,10 @@ public class PlayerController : MonoBehaviour
         //This line of code will control the jump power or DO the jump!!
         if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
         {
-            rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (currentAbility == null)
+            {
+                rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
 
         // if (Input.GetKey(KeyCode.Backspace))

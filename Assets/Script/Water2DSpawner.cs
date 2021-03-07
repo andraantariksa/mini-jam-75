@@ -193,6 +193,14 @@ public class Water2DSpawner : MonoBehaviour
 		}
 	}
 
+	public void DestroyAll()
+	{
+		foreach (var waterDrops in WaterDropsObjects)
+		{
+			Destroy(waterDrops);
+		}
+	}
+
 	public void Restore()
 	{
 

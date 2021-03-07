@@ -6,6 +6,9 @@ public class WoodAbility : MonoBehaviour, IAbility
 {
     public GameObject prefabStump;
     public WoodBook prefabWoodBook;
+    public float FireDelay  = 3f;
+    float currentFireDelay = 0f;
+    GameObject currentStump = null;
 
     public void Start()
     {
@@ -15,23 +18,46 @@ public class WoodAbility : MonoBehaviour, IAbility
 
     public void Cast(PlayerController player)
     {
-        var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-        if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
+        if (currentFireDelay <= 0f)
         {
-            hit.collider.GetComponent<Pedestal>().Spell(SpellType.Wood);
-        }
-        else
-        {
-            Instantiate(prefabStump, hit.point, Quaternion.identity);
-            Destroy(this);
+            player.animator.SetTrigger("useWoodAbility");
+            DestroyCurrentStump();
+            var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+            if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
+            {
+                hit.collider.GetComponent<Pedestal>().Spell(SpellType.Wood);
+            }
+            else
+            {
+                currentStump = Instantiate(prefabStump, hit.point, Quaternion.identity);
+            }
+            currentFireDelay = FireDelay;
         }
     }
 
     public void Drop(PlayerController player)
     {
+        player.animator.SetBool("isHoldingWoodBook", false);
         var woodBook = Instantiate(prefabWoodBook, player.transform.position, player.transform.rotation);
         woodBook.UntakeableFor();
         player.currentAbility = null;
+        DestroyCurrentStump();
         Destroy(this);
+    }
+
+    void Update()
+    {
+        if (currentFireDelay > 0f)
+        {
+            currentFireDelay -= Time.deltaTime;
+        }
+    }
+
+    void DestroyCurrentStump()
+    {
+        if (currentStump != null)
+        {
+            Destroy(currentStump);
+        }
     }
 }

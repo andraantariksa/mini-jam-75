@@ -6,8 +6,8 @@ public class FireAbility : MonoBehaviour, IAbility
 {
     public GameObject prefabFireball;
     public FireBook prefabFireBook;
-    public float FireDelay { get; private set; }
-    float fireDelay;
+    public float FireDelay  = 3f;
+    float currentFireDelay = 0f;
 
     public void Start()
     {
@@ -17,20 +17,25 @@ public class FireAbility : MonoBehaviour, IAbility
 
     public void Cast(PlayerController player)
     {
-        var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-        if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
+        if (currentFireDelay <= 0f)
         {
-            hit.collider.GetComponent<Pedestal>().Spell(SpellType.Fire);
+            player.animator.SetTrigger("useFireAbility");
+            var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+            if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
+            {
+                hit.collider.GetComponent<Pedestal>().Spell(SpellType.Fire);
+            }
+            else
+            {
+                Instantiate(prefabFireball, player.firePoint.transform.position, player.firePoint.transform.rotation);
+            }
+            currentFireDelay = FireDelay;
         }
-        else
-        {
-            Instantiate(prefabFireball, player.firePoint.transform.position, player.firePoint.transform.rotation);
-        }
-        fireDelay = FireDelay;
     }
 
     public void Drop(PlayerController player)
     {
+        player.animator.SetBool("isHoldingFireBook", false);
         var fireBook = Instantiate(prefabFireBook, player.transform.position, player.transform.rotation);
         fireBook.UntakeableFor();
         player.currentAbility = null;
@@ -39,9 +44,9 @@ public class FireAbility : MonoBehaviour, IAbility
 
     void Update()
     {
-        if (fireDelay > 0f)
+        if (currentFireDelay > 0f)
         {
-            fireDelay -= Time.deltaTime;
+            currentFireDelay -= Time.deltaTime;
         }
     }
 }
