@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
-    private float moveInput;
+    private float horizontalMoveInput;
+    private float verticalMoveInput;
     [SerializeField] private bool isFacingRight;
 
     [Space]
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fireRateForFireBall;
     [SerializeField] public Transform firePoint;
     public IAbility currentAbility = null;
+    public Animator animator;
  
 
     public bool hasWoodBook { get; protected set; }
@@ -44,14 +46,17 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         stumpDelay = stumpMakingRate;
         fireDelay = fireRateForFireBall;
-
     }
 
     private void Update()
     {
+        horizontalMoveInput = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("horizontalSpeed", Mathf.Abs(horizontalMoveInput));
+        animator.SetFloat("verticalSpeed", rb2d.velocity.y);
         // WoodAbility();
         // FireAbility();
 
@@ -89,7 +94,15 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
-        Move();
+        rb2d.velocity = new Vector2(horizontalMoveInput * speed, rb2d.velocity.y);
+        if (isFacingRight && horizontalMoveInput > 0f)
+        {
+            Flip();
+        }
+        else if (!isFacingRight && horizontalMoveInput < 0f)
+        {
+            Flip();
+        }
     }
 
     public void Flip()
@@ -97,22 +110,6 @@ public class PlayerController : MonoBehaviour
         isFacingRight = !isFacingRight;
         
         transform.Rotate(0f, 180f, 0f);
-    }
-
-    public void Move()
-    {
-        moveInput = Input.GetAxis("Horizontal");
-
-        rb2d.velocity = new Vector2(moveInput * speed, rb2d.velocity.y);
-
-        if (isFacingRight && moveInput > 0)
-        {
-            Flip();
-        }
-        else if (!isFacingRight && moveInput < 0)
-        {
-            Flip();
-        }
     }
 
     // private void OnCollisionEnter2D(Collision2D collision)

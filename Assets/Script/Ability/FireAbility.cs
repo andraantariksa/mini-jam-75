@@ -6,6 +6,8 @@ public class FireAbility : MonoBehaviour, IAbility
 {
     public GameObject prefabFireball;
     public FireBook prefabFireBook;
+    public float FireDelay { get; private set; }
+    float fireDelay;
 
     public void Start()
     {
@@ -24,6 +26,7 @@ public class FireAbility : MonoBehaviour, IAbility
         {
             Instantiate(prefabFireball, player.firePoint.transform.position, player.firePoint.transform.rotation);
         }
+        fireDelay = FireDelay;
     }
 
     public void Drop(PlayerController player)
@@ -32,5 +35,13 @@ public class FireAbility : MonoBehaviour, IAbility
         fireBook.UntakeableFor();
         player.currentAbility = null;
         Destroy(this);
+    }
+
+    void Update()
+    {
+        if (fireDelay > 0f)
+        {
+            fireDelay -= Time.deltaTime;
+        }
     }
 }

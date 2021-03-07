@@ -18,7 +18,7 @@ public class WoodAbility : MonoBehaviour, IAbility
         var hit = Physics2D.Raycast(player.transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
         if (hit.collider != null && hit.collider.gameObject.tag == "Pedestal")
         {
-            hit.collider.GetComponent<Pedestal>().Spell(SpellType.Fire);
+            hit.collider.GetComponent<Pedestal>().Spell(SpellType.Wood);
         }
         else
         {

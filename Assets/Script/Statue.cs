@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TotemState
+public enum StatueState
 {
     Stone,
     Wood,
@@ -10,14 +10,17 @@ public enum TotemState
     Burnt
 };
 
-public class Totem : MonoBehaviour
+public class Statue : MonoBehaviour
 {
-    public TotemState state = TotemState.Stone;
+    public StatueState state = StatueState.Stone;
     public AudioSource audioSource;
+    public Animator animator;
+    public GameManager gameManager;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
     }
 
     public bool Spell(SpellType spellType)
@@ -26,27 +29,32 @@ public class Totem : MonoBehaviour
         switch (spellType)
         {
             case SpellType.Wood:
-                if (state == TotemState.Stone)
+                if (state == StatueState.Stone)
                 {
                     // Change the sprite to wood sprite
-                    state = TotemState.Wood;
+                    animator.SetBool("givenWoodSpell", true);
+                    state = StatueState.Wood;
                     works = true;
                 }
                 break;
             case SpellType.Fire:
-                if (state == TotemState.Wood)
+                if (state == StatueState.Wood)
                 {
                     // Change the sprite to on fire sprite with the animation?
-                    state = TotemState.OnFire;
+                    animator.SetBool("givenFireSpell", true);
+                    state = StatueState.OnFire;
                     works = true;
                 }
                 break;
             case SpellType.Water:
-                if (state == TotemState.OnFire)
+                if (state == StatueState.OnFire)
                 {
                     // Change the sprite to burnt
-                    state = TotemState.Burnt;
+                    animator.SetBool("givenWaterSpell", true);
+                    state = StatueState.Burnt;
                     works = true;
+
+                    gameManager.GameOverIn();
                 }
                 break;
         };

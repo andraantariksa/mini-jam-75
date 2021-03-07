@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pedestal : MonoBehaviour
 {
-    public Totem totem;
+    public Statue statue;
     public AudioSource audioSource;
 
     void Start()
@@ -14,6 +14,6 @@ public class Pedestal : MonoBehaviour
 
     public void Spell(SpellType spellType)
     {
-        totem.Spell(spellType);
+        statue.Spell(spellType);
     }
 }
