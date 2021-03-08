@@ -36,7 +36,7 @@ public class FireAbility : MonoBehaviour, IAbility
     public void Drop(PlayerController player)
     {
         player.animator.SetBool("isHoldingFireBook", false);
-        var fireBook = Instantiate(prefabFireBook, player.transform.position, player.transform.rotation);
+        var fireBook = Instantiate(prefabFireBook, player.firePoint.transform.position, player.transform.rotation);
         fireBook.UntakeableFor();
         player.currentAbility = null;
         Destroy(this);

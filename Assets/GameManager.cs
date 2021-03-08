@@ -13,13 +13,18 @@ public class GameManager : MonoBehaviour
         gameOverOverlay.SetActive(true);
     }
 
-    public void GameRetry()
+    public void GameRetry(string thisScene)
     {
-        SceneManager.LoadScene("Scene/SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
     public void GameOverIn(float seconds=2f)
     {
         Invoke(nameof(GameOver), seconds);
+    }
+
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name, LoadSceneMode.Single);
     }
 }

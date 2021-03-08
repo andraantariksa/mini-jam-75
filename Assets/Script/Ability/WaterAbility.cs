@@ -41,7 +41,7 @@ public class WaterAbility : MonoBehaviour, IAbility
     public void Drop(PlayerController player)
     {
         player.animator.SetBool("isHoldingWaterBook", false);
-        var waterBook = Instantiate(prefabWaterBook, player.transform.position, player.transform.rotation);
+        var waterBook = Instantiate(prefabWaterBook, player.firePoint.transform.position, player.transform.rotation);
         waterBook.UntakeableFor();
         player.currentAbility = null;
         DestroyWaterSpawner();

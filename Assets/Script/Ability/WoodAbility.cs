@@ -38,7 +38,7 @@ public class WoodAbility : MonoBehaviour, IAbility
     public void Drop(PlayerController player)
     {
         player.animator.SetBool("isHoldingWoodBook", false);
-        var woodBook = Instantiate(prefabWoodBook, player.transform.position, player.transform.rotation);
+        var woodBook = Instantiate(prefabWoodBook, player.firePoint.transform.position, player.transform.rotation);
         woodBook.UntakeableFor();
         player.currentAbility = null;
         DestroyCurrentStump();
